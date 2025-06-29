@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ProjectContent.Code.ToolsAndExtentionsScripts.DictionarySerializer
+namespace ExtInspectorTools
 {
   [Serializable]
   public class SerializableKeyValuePair<TKey, TValue>

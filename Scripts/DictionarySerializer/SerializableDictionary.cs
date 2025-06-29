@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace ProjectContent.Code.ToolsAndExtentionsScripts.DictionarySerializer
+namespace ExtInspectorTools
 {
   [Serializable]
   public class SerializableDictionary<TKey, TValue> : ISerializationCallbackReceiver, IEnumerable

@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace ProjectContent.Code.ToolsAndExtentionsScripts.RequiredNotNull
+namespace ExtInspectorTools
 {
   [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
   public class RequireNotNullAttribute : PropertyAttribute { }

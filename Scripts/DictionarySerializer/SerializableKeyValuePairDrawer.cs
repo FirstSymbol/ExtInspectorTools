@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace ProjectContent.Code.ToolsAndExtentionsScripts.DictionarySerializer
+namespace ExtInspectorTools
 {
   [CustomPropertyDrawer(typeof(SerializableKeyValuePair<,>))]
   public class SerializableKeyValuePairDrawer : PropertyDrawer

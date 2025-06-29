@@ -6,7 +6,7 @@ using System.Linq;
 using UnityEditor;
 using UnityEngine;
 
-namespace ProjectContent.Code.PrototypingFolder
+namespace ExtInspectorTools
 {
   [CustomPropertyDrawer(typeof(TypeReference<>))]
   public class TypeReferenceDrawer : PropertyDrawer

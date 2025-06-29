@@ -3,7 +3,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace ProjectContent.Code.ToolsAndExtentionsScripts.RequiredNotNull
+namespace ExtInspectorTools
 {
   [InitializeOnLoad]
   public static class RequireNotNullValidator

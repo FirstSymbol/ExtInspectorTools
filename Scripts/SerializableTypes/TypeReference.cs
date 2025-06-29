@@ -1,7 +1,7 @@
 ﻿using System;
 using UnityEngine;
 
-namespace ProjectContent.Code.PrototypingFolder
+namespace ExtInspectorTools
 {
   [Serializable]
   public class TypeReference<T> : ISerializationCallbackReceiver
