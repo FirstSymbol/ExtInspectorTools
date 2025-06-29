@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace ExtInspectorTools.Editor
 {
-  [CustomPropertyDrawer(typeof(ExtInspectorTools.SerializableKeyValuePair<,>))]
+  [CustomPropertyDrawer(typeof(SerializableKeyValuePair<,>))]
   public class SerializableKeyValuePairDrawer : PropertyDrawer
   {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
