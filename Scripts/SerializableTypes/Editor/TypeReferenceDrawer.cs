@@ -5,11 +5,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
-using ExtInspectorTools;
 
 namespace ExtInspectorTools.Editor
 {
-  [CustomPropertyDrawer(typeof(TypeReference<>))]
+  [CustomPropertyDrawer(typeof(ExtInspectorTools.TypeReference<>))]
   public class TypeReferenceDrawer : PropertyDrawer
   {
     private static readonly Dictionary<Type, List<Type>> CachedDerivedTypes = new();

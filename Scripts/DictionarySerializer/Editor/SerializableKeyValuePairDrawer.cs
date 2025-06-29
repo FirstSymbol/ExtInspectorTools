@@ -1,11 +1,10 @@
 ﻿#if UNITY_EDITOR
 using UnityEditor;
 using UnityEngine;
-using ExtInspectorTools;
 
 namespace ExtInspectorTools.Editor
 {
-  [CustomPropertyDrawer(typeof(SerializableKeyValuePair<,>))]
+  [CustomPropertyDrawer(typeof(ExtInspectorTools.SerializableKeyValuePair<,>))]
   public class SerializableKeyValuePairDrawer : PropertyDrawer
   {
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
