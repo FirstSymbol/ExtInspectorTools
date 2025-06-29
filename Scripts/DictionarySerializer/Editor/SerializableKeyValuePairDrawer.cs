@@ -2,7 +2,7 @@
 using UnityEditor;
 using UnityEngine;
 
-namespace ExtInspectorTools
+namespace ExtInspectorTools.Editor
 {
   [CustomPropertyDrawer(typeof(SerializableKeyValuePair<,>))]
   public class SerializableKeyValuePairDrawer : PropertyDrawer
