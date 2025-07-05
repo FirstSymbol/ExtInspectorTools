@@ -2,6 +2,7 @@
 
 using UnityEditor;
 using UnityEngine;
+using ExtInspectorTools;
 
 namespace ExtInspectorTools
 {
