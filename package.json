@@ -1,7 +1,7 @@
 {
   "name": "com.firstsymbol.extinspectortools",
   "references" : [
-    "ExtInspectorTools"
+    "com.firstsymbol.extinspectortools.ExtInspectorTools"
   ],
   "displayName": "ExtInspectorTools",
   "description": "Advanced inspector attributes for Unity",
