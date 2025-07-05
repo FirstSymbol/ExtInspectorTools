@@ -2,9 +2,13 @@
   "name": "com.firstsymbol.extinspectortools",
   "displayName": "ExtInspectorTools",
   "description": "Advanced inspector attributes for Unity",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "unity": "6.1",
-  "author": "FirstSymbol (https://github.com/FirstSymbol)",
+  "documentationUrl": "https://github.com/FirstSymbol/ExtInspectorTools.git",
   "homepage": "https://github.com/FirstSymbol/ExtInspectorTools#readme",
-  "dependencies": {}
+  "dependencies": {},
+  "author": {
+    "name": "FirstSymbol",
+    "url": "https://linkedin.com/in/firstsymbol"
+  }
 }
