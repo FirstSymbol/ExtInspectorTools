@@ -1,10 +1,7 @@
 {
-    "name": "ExtInspectorTools.TypeReference",
+    "name": "ExtInspectorTools.Scripts.TypeReference",
     "rootNamespace": "",
-    "references": [
-        "GUID:446fb72046fc3074e9f9943e48856ea0",
-        "ExtInspectorTools.TypeReference"
-    ],
+    "references": [],
     "includePlatforms": [],
     "excludePlatforms": [],
     "allowUnsafeCode": false,
