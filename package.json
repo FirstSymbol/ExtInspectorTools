@@ -6,8 +6,5 @@
   "unity": "6.1",
   "documentationUrl": "https://github.com/FirstSymbol/ExtInspectorTools.git",
   "dependencies": {},
-  "author": {
-    "name": "FirstSymbol",
-    "url": "https://linkedin.com/in/firstsymbol"
-  }
+  "author": "FirstSymbol (https://linkedin.com/in/firstsymbol)"
 }
