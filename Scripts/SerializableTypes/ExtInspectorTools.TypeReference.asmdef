@@ -1,0 +1,17 @@
+{
+    "name": "ExtInspectorTools.TypeReference",
+    "rootNamespace": "",
+    "references": [
+        "GUID:446fb72046fc3074e9f9943e48856ea0",
+        "ExtInspectorTools.TypeReference"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
