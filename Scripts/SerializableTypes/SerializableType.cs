@@ -5,7 +5,7 @@ using UnityEngine;
 namespace ExtInspectorTools
 {
   [Serializable]
-  public class SerializableType<T> : ISerializationCallbackReceiver where T : class
+  public class SerializableType<T> : ISerializationCallbackReceiver, IEquatable<SerializableType<T>> where T : class
   {
     [SerializeField] private string _typeName;
 
@@ -42,6 +42,11 @@ namespace ExtInspectorTools
 
       if (Type == null)
         Debug.LogWarning($"Could not find type with FullName '{_typeName}' assignable to {typeof(T).Name}.");
+    }
+
+    public bool Equals(SerializableType<T> other)
+    {
+      return Type == other?.Type;
     }
   }
 }
