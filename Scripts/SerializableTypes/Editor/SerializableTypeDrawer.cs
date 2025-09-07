@@ -12,27 +12,19 @@ namespace ExtInspectorTools.Editor
   {
     private const string TypeNameField = "_typeName";
 
-    private static readonly Dictionary<Type, List<Type>> CachedAssignableTypes = new();
+    private static readonly Dictionary<Type, (List<Type> Types, List<string> DisplayNames)> CachedTypeData = new();
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
       EditorGUI.BeginProperty(position, label, property);
 
       // Get the generic type T
-      var baseType = fieldInfo.FieldType.GetGenericArguments()[0];
+      var baseType = fieldInfo.FieldType.IsArray
+        ? fieldInfo.FieldType.GetElementType().GetGenericArguments()[0]
+        : fieldInfo.FieldType.GetGenericArguments()[0];
 
-      // Get cached assignable types
-      var availableTypes = GetAssignableTypes(baseType);
-
-      // Generate display names, disambiguating if necessary, and add "None" at the beginning
-      var displayNames = new List<string> { "None" };
-      var groups = availableTypes.GroupBy(t => t.Name).ToDictionary(g => g.Key, g => g.ToList());
-      foreach (var type in availableTypes)
-      {
-        var displayName = type.Name;
-        if (groups[type.Name].Count > 1) displayName = $"{type.Name} ({type.Namespace ?? "global"})";
-        displayNames.Add(displayName);
-      }
+      // Get cached types and display names
+      var (availableTypes, displayNames) = GetTypeData(baseType);
 
       // Get current type name
       var typeNameProp = property.FindPropertyRelative(TypeNameField);
@@ -53,29 +45,41 @@ namespace ExtInspectorTools.Editor
 
       if (newIndex != selectedIndex)
       {
-        if (newIndex == 0)
-          typeNameProp.stringValue = string.Empty;
-        else
-          typeNameProp.stringValue = availableTypes[newIndex - 1].FullName;
+        typeNameProp.stringValue = newIndex == 0 ? string.Empty : availableTypes[newIndex - 1].FullName;
         property.serializedObject.ApplyModifiedProperties();
       }
 
       EditorGUI.EndProperty();
     }
 
-    private static List<Type> GetAssignableTypes(Type baseType)
+    private static (List<Type> Types, List<string> DisplayNames) GetTypeData(Type baseType)
     {
-      if (CachedAssignableTypes.TryGetValue(baseType, out var types)) return types;
+      if (CachedTypeData.TryGetValue(baseType, out var data))
+        return data;
 
-      types = AppDomain.CurrentDomain.GetAssemblies()
+      // Compute assignable types
+      var types = AppDomain.CurrentDomain.GetAssemblies()
         .SelectMany(asm => asm.GetTypes())
         .Where(t => !t.IsAbstract && !t.IsInterface && baseType.IsAssignableFrom(t))
         .OrderBy(t => t.Name)
         .ThenBy(t => t.Namespace)
         .ToList();
 
-      CachedAssignableTypes[baseType] = types;
-      return types;
+      // Generate display names
+      var displayNames = new List<string> { "None" };
+      var groups = types.GroupBy(t => t.Name).ToDictionary(g => g.Key, g => g.ToList());
+      foreach (var type in types)
+      {
+        var displayName = type.Name;
+        if (groups[type.Name].Count > 1)
+          displayName = $"{type.Name} ({type.Namespace ?? "global"})";
+        displayNames.Add(displayName);
+      }
+
+      // Cache the results
+      data = (types, displayNames);
+      CachedTypeData[baseType] = data;
+      return data;
     }
   }
 }

@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -8,6 +10,27 @@ namespace ExtInspectorTools
   public class SerializableType<T> : ISerializationCallbackReceiver, IEquatable<SerializableType<T>> where T : class
   {
     [SerializeField] private string _typeName;
+
+    private static readonly Type[] CachedAssignableTypes;
+    private static readonly Dictionary<string, Type> TypeNameToTypeCache = new();
+
+    static SerializableType()
+    {
+      // Precompute assignable types at static initialization
+      CachedAssignableTypes = AppDomain.CurrentDomain.GetAssemblies()
+        .SelectMany(asm => asm.GetTypes())
+        .Where(t => !t.IsAbstract && !t.IsInterface && typeof(T).IsAssignableFrom(t))
+        .OrderBy(t => t.Name)
+        .ThenBy(t => t.Namespace)
+        .ToArray();
+
+      // Populate type name cache
+      foreach (var type in CachedAssignableTypes)
+      {
+        if (!string.IsNullOrEmpty(type.FullName))
+          TypeNameToTypeCache[type.FullName] = type;
+      }
+    }
 
     public SerializableType()
     {
@@ -35,18 +58,22 @@ namespace ExtInspectorTools
         return;
       }
 
-      // Find the type by FullName among all types assignable to T
-      Type = AppDomain.CurrentDomain.GetAssemblies()
-        .SelectMany(asm => asm.GetTypes())
-        .FirstOrDefault(t => t.FullName == _typeName && typeof(T).IsAssignableFrom(t));
-
-      if (Type == null)
+      // Use cached dictionary for faster lookup
+      if (TypeNameToTypeCache.TryGetValue(_typeName, out var type))
+      {
+        Type = type;
+      }
+      else
+      {
+        Type = null;
         Debug.LogWarning($"Could not find type with FullName '{_typeName}' assignable to {typeof(T).Name}.");
+      }
     }
 
-    public bool Equals(SerializableType<T> other)
-    {
-      return Type == other?.Type;
-    }
+    public bool Equals(SerializableType<T> other) => other != null && Type == other.Type;
+
+    public override bool Equals(object obj) => Equals(obj as SerializableType<T>);
+
+    public override int GetHashCode() => HashCode.Combine(_typeName, Type);
   }
 }
