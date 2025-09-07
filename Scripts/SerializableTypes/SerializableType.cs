@@ -12,7 +12,6 @@ namespace ExtInspectorTools
     [SerializeField] private string _typeName;
 
     private static readonly Type[] CachedAssignableTypes;
-    private static readonly Dictionary<string, Type> TypeNameToTypeCache = new();
 
     static SerializableType()
     {
@@ -23,13 +22,6 @@ namespace ExtInspectorTools
         .OrderBy(t => t.Name)
         .ThenBy(t => t.Namespace)
         .ToArray();
-
-      // Populate type name cache
-      foreach (var type in CachedAssignableTypes)
-      {
-        if (!string.IsNullOrEmpty(type.FullName))
-          TypeNameToTypeCache[type.FullName] = type;
-      }
     }
 
     public SerializableType()
@@ -47,7 +39,7 @@ namespace ExtInspectorTools
 
     void ISerializationCallbackReceiver.OnBeforeSerialize()
     {
-      _typeName = Type?.FullName;
+      _typeName = Type?.AssemblyQualifiedName;
     }
 
     void ISerializationCallbackReceiver.OnAfterDeserialize()
@@ -58,15 +50,43 @@ namespace ExtInspectorTools
         return;
       }
 
-      // Use cached dictionary for faster lookup
-      if (TypeNameToTypeCache.TryGetValue(_typeName, out var type))
+      // Primary lookup using AssemblyQualifiedName
+      Type = Type.GetType(_typeName);
+      if (Type != null && typeof(T).IsAssignableFrom(Type))
       {
-        Type = type;
+        return;
+      }
+
+      // Fallback if not found (e.g., namespace changed)
+      string simpleName;
+      if (_typeName.Contains(','))
+      {
+        simpleName = _typeName.Split(',')[0].Trim().Split('.').LastOrDefault() ?? string.Empty;
+      }
+      else
+      {
+        simpleName = _typeName.Split('.').LastOrDefault() ?? string.Empty;
+      }
+
+      if (string.IsNullOrEmpty(simpleName))
+      {
+        Type = null;
+        Debug.LogWarning($"Invalid type name '{_typeName}' for {typeof(T).Name}.");
+        return;
+      }
+
+      var candidates = CachedAssignableTypes.Where(t => t.Name == simpleName).ToList();
+
+      if (candidates.Count == 1)
+      {
+        Type = candidates[0];
+        Debug.Log($"Fallback: Resolved type '{simpleName}' from old name '{_typeName}' to {Type.AssemblyQualifiedName}.");
       }
       else
       {
         Type = null;
-        Debug.LogWarning($"Could not find type with FullName '{_typeName}' assignable to {typeof(T).Name}.");
+        string msg = candidates.Count > 1 ? "Multiple candidates found" : "Could not find type";
+        Debug.LogWarning($"{msg} for '{simpleName}' from old name '{_typeName}' assignable to {typeof(T).Name}. Manual selection required.");
       }
     }
 

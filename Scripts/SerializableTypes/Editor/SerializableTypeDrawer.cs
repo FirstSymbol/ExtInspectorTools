@@ -26,7 +26,7 @@ namespace ExtInspectorTools.Editor
       // Get cached types and display names
       var (availableTypes, displayNames) = GetTypeData(baseType);
 
-      // Get current type name
+      // Get current type name (now AssemblyQualifiedName)
       var typeNameProp = property.FindPropertyRelative(TypeNameField);
       var currentTypeName = typeNameProp.stringValue;
 
@@ -34,7 +34,7 @@ namespace ExtInspectorTools.Editor
       var selectedIndex = 0;
       if (!string.IsNullOrEmpty(currentTypeName))
       {
-        var typeIndex = availableTypes.FindIndex(t => t.FullName == currentTypeName);
+        var typeIndex = availableTypes.FindIndex(t => t.AssemblyQualifiedName == currentTypeName);
         if (typeIndex >= 0) selectedIndex = typeIndex + 1; // Offset by 1 for "None"
       }
 
@@ -45,7 +45,7 @@ namespace ExtInspectorTools.Editor
 
       if (newIndex != selectedIndex)
       {
-        typeNameProp.stringValue = newIndex == 0 ? string.Empty : availableTypes[newIndex - 1].FullName;
+        typeNameProp.stringValue = newIndex == 0 ? string.Empty : availableTypes[newIndex - 1].AssemblyQualifiedName;
         property.serializedObject.ApplyModifiedProperties();
       }
 
