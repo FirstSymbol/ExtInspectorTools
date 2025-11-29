@@ -17,7 +17,7 @@ Allows you serialize a dictionary in inspector.<br>
 public SerializableDictionary<int, string> exampleDictionary = new();
 ```
 <br>How it looks at inspector:<br><br>
-![Looks at inspector](img.png)<br>
+![Looks at inspector](https://github.com/user-attachments/assets/f5d187fd-efe8-4907-98c1-d668306dadef)<br>
 
 ## Attributes
 ### RequireNotNull Attribute
