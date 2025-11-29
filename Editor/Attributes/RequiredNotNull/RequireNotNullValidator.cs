@@ -1,24 +1,28 @@
 ﻿#if UNITY_EDITOR
 
+using System;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
-namespace ExtInspectorTools
+namespace ExtInspectorTools.Editor
 {
   [InitializeOnLoad]
   public static class RequireNotNullValidator
   {
+    [Obsolete("Obsolete")]
     static RequireNotNullValidator()
     {
       EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
     }
 
+    [Obsolete("Obsolete")]
     private static void OnPlayModeStateChanged(PlayModeStateChange state)
     {
       if (state == PlayModeStateChange.ExitingEditMode)
       {
         // Проверяем все объекты на сцене перед запуском
-        foreach (GameObject go in GameObject.FindObjectsOfType<GameObject>())
+        foreach (GameObject go in Object.FindObjectsOfType<GameObject>())
         {
           foreach (MonoBehaviour mono in go.GetComponents<MonoBehaviour>())
           {
