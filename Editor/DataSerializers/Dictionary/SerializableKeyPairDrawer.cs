@@ -9,12 +9,18 @@ namespace ExtInspectorTools.Editor
   [CustomPropertyDrawer(typeof(SerializableKeyValuePair<,>))]
   public class SerializableKeyPairDrawer : PropertyDrawer
   {
-    // Константы для красоты
+    internal float KeyRatio;
+    internal float Spacing;
+    internal float ValueRatio;
     
     private static readonly GUIContent emptyContent = GUIContent.none;
 
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
+      KeyRatio = SerializableDictionaryDrawerParams.KEY_RATIO;
+      Spacing = SerializableDictionaryDrawerParams.SPACING;
+      ValueRatio = SerializableDictionaryDrawerParams.VALUE_RATIO;
+      
       // 1. Поддержка prefab override, undo, multi-edit
       EditorGUI.BeginProperty(position, label, property);
       // 2. Если поле в массиве/списке — рисуем с номером элемента
@@ -54,11 +60,11 @@ namespace ExtInspectorTools.Editor
 
       // 5. Делим пространство
       float totalWidth = labelRect.width;
-      float keyWidth   = totalWidth * SerializableDictionaryDrawerParams.KEY_RATIO;
-      float valueWidth = totalWidth - keyWidth - SerializableDictionaryDrawerParams.SPACING;
+      float keyWidth   = totalWidth * KeyRatio;
+      float valueWidth = totalWidth - keyWidth - Spacing;
       
       Rect keyRect   = new Rect(labelRect.x,               labelRect.y, keyWidth,   labelRect.height);
-      Rect valueRect = new Rect(labelRect.x + keyWidth + SerializableDictionaryDrawerParams.SPACING, labelRect.y, valueWidth, labelRect.height);
+      Rect valueRect = new Rect(labelRect.x + keyWidth + Spacing, labelRect.y, valueWidth, labelRect.height);
 
       // 6. Рисуем поля без лейблов (чтобы не было "key" и "value")
       EditorGUI.PropertyField(keyRect,   keyProp,   emptyContent);

@@ -2,10 +2,10 @@
 
 namespace ExtInspectorTools.Editor
 {
-  public static class SerializableDictionaryDrawerParams
+  internal static class SerializableDictionaryDrawerParams
   {
-    public const float KEY_RATIO   = 0.5f;
-    public const float VALUE_RATIO = 1 - KEY_RATIO;
-    public const float SPACING     = 4f;
+    internal static float KEY_RATIO   = 0.3f;
+    internal static float SPACING     = 4f;
+    internal static float VALUE_RATIO => 1 - KEY_RATIO;
   }
 }

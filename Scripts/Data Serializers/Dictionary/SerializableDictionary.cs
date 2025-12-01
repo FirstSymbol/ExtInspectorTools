@@ -9,6 +9,12 @@ namespace ExtInspectorTools
   [Serializable]
   public class SerializableDictionary<TKey,TValue> : IDictionary<TKey,TValue>, ISerializationCallbackReceiver
   {
+#if UNITY_EDITOR
+    [SerializeField, HideInInspector] 
+    private float _editorKeyRatio = 0.5f;
+#endif
+    
+    
     [SerializeField] List<SerializableKeyValuePair<TKey,TValue>> pairs = new();
     [NonSerialized] Dictionary<TKey, TValue> dictionary = new Dictionary<TKey, TValue>();
     [NonSerialized] private HashSet<int> duplicateIndices = new();
