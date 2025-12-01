@@ -1,6 +1,4 @@
-﻿using UnityEditor;
-
-namespace ExtInspectorTools.Editor
+﻿namespace ExtInspectorTools.Editor
 {
   internal static class SerializableDictionaryDrawerParams
   {

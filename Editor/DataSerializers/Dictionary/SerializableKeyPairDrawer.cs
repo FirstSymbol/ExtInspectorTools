@@ -2,7 +2,6 @@
 using ExtInspectorTools.Data;
 using UnityEditor;
 using UnityEngine;
-using UnityEngine.UIElements;
 
 namespace ExtInspectorTools.Editor
 {
@@ -11,7 +10,6 @@ namespace ExtInspectorTools.Editor
   {
     internal float KeyRatio;
     internal float Spacing;
-    internal float ValueRatio;
     
     private static readonly GUIContent emptyContent = GUIContent.none;
 
@@ -19,11 +17,8 @@ namespace ExtInspectorTools.Editor
     {
       KeyRatio = SerializableDictionaryDrawerParams.KEY_RATIO;
       Spacing = SerializableDictionaryDrawerParams.SPACING;
-      ValueRatio = SerializableDictionaryDrawerParams.VALUE_RATIO;
       
-      // 1. Поддержка prefab override, undo, multi-edit
       EditorGUI.BeginProperty(position, label, property);
-      // 2. Если поле в массиве/списке — рисуем с номером элемента
       label = EditorGUI.BeginProperty(position, label, property);
       Rect labelRect = EditorGUI.PrefixLabel(position, label);
       
