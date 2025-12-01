@@ -12,7 +12,7 @@ namespace ExtInspectorTools.Editor.Extentions
 
       float foldoutBtnHeight = EditorGUIUtility.singleLineHeight / 1.15f;
       
-      Rect bgBorderRect = new Rect(position.x, position.y, position.width, position.height + containerHeight);
+      Rect bgBorderRect = new Rect(position.x, position.y, position.width, position.height + containerHeight - borderWidth);
       Rect bgInnerRect = new Rect(bgBorderRect.x + borderWidth, bgBorderRect.y + borderWidth,
         bgBorderRect.width - borderWidth*2, bgBorderRect.height - borderWidth * 2);
       
