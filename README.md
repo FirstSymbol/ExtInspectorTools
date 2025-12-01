@@ -14,10 +14,10 @@ Choosing type:<br><br>
 ### SerializableDictionary class
 Allows you serialize a dictionary in inspector.<br>
 ```Csharp
-public SerializableDictionary<int, string> exampleDictionary = new();
+public SerializableDictionary<int, string>  wordDictionary = new();
 ```
 <br>How it looks at inspector:<br><br>
-![Looks at inspector](https://github.com/user-attachments/assets/f5d187fd-efe8-4907-98c1-d668306dadef)<br>
+![Looks at inspector](https://github.com/user-attachments/assets/211b60fa-ef34-4c89-970a-ed2ed60a43f7)<br>
 
 ## Attributes
 ### RequireNotNull Attribute
