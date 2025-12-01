@@ -31,6 +31,7 @@ namespace ExtInspectorTools.Editor
     private static Rects rects = new Rects();
     
     private readonly Vector2 offset = new Vector2(0, 2);
+    private readonly float sliderPaddingTopDown = 2;
 
     #endregion
 
@@ -50,12 +51,12 @@ namespace ExtInspectorTools.Editor
       rects.foldoutRect = new Rect(subRect.x, subRect.y, subRect.width, EditorGUIUtility.singleLineHeight + foldoutBtn);
       property.isExpanded = ExtEditor.VerticalFoldout(rects.foldoutRect, property.isExpanded, label, rects.foldoutContainerRect.height);
       
-      rects.foldoutContainerRect = new Rect(rects.foldoutRect.x, position.y + rects.foldoutRect.height - foldoutBtn,
-        rects.foldoutRect.width, 0);
+      rects.foldoutContainerRect = new Rect(rects.foldoutRect.x+6, position.y + rects.foldoutRect.height - foldoutBtn,
+        rects.foldoutRect.width-12, 0);
       
       if (property.isExpanded)
       {
-        Rects.SetHeightRect(ref rects.foldoutContainerRect, list.GetHeight() + sliderHeight);
+        Rects.SetHeightRect(ref rects.foldoutContainerRect, list.GetHeight() + sliderHeight + sliderPaddingTopDown);
         DrawFoldoutRect(rects.foldoutContainerRect, property, label);
       }
       else
@@ -76,8 +77,8 @@ namespace ExtInspectorTools.Editor
     {
       EditorGUI.BeginChangeCheck();
       
-      Rect sliderRect = new Rect(position.x + 15, position.y, position.width - 15, EditorGUIUtility.singleLineHeight);
-      Rect listRect = new Rect(position.x, position.y + sliderHeight, position.width, list.GetHeight());
+      Rect sliderRect = new Rect(position.x + 15, position.y + sliderPaddingTopDown, position.width - 15, EditorGUIUtility.singleLineHeight);
+      Rect listRect = new Rect(position.x, position.y + sliderHeight + sliderPaddingTopDown, position.width, list.GetHeight());
       
       EditorGUI.BeginChangeCheck();
       var t = GUI.HorizontalSlider(sliderRect, slider_value, 0f, 1f);
