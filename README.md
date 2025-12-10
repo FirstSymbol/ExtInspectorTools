@@ -1,5 +1,11 @@
 
 # ExtInspectorTools
+### Supported versions
+- Unity 2022.3.62f2 and later
+## Installation
+1. Download package
+    - From package manager - https://github.com/FirstSymbol/ExtInspectorTools.git
+    - From file - download and drop in project folder.
 ## Serializers
 ### SerializableType<TParent> class
 Allows you to select the type that inherits from the specified class. In the example, the classes Armor, Health, Mana, Speed, and Endurance are inherited from the StatBase class.<br>
