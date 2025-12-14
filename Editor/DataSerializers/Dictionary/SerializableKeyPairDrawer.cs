@@ -62,15 +62,26 @@ namespace ExtInspectorTools.Editor
       Rect valueRect = new Rect(labelRect.x + keyWidth + Spacing, labelRect.y, valueWidth, labelRect.height);
 
       // 6. Рисуем поля без лейблов (чтобы не было "key" и "value")
-      EditorGUI.PropertyField(keyRect,   keyProp,   emptyContent);
-      EditorGUI.PropertyField(valueRect, valueProp, emptyContent);
+      EditorGUI.PropertyField(keyRect,   keyProp, emptyContent, true);
+      EditorGUI.PropertyField(valueRect, valueProp, emptyContent,true);
       
       EditorGUI.EndProperty(); // BeginProperty
     }
 
     public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
     {
-      return EditorGUIUtility.singleLineHeight;
+      SerializedProperty keyProp   = property.FindPropertyRelative("key");
+      SerializedProperty valueProp = property.FindPropertyRelative("value");
+      float height = EditorGUIUtility.singleLineHeight;
+      if (keyProp == null || valueProp == null)
+      {
+        Debug.Log("Error: fields not found");
+        return height;
+      }
+      float keyH = EditorGUI.GetPropertyHeight(keyProp, true);
+      float valueH = EditorGUI.GetPropertyHeight(valueProp, true);
+      
+      return keyH > valueH ? keyH : valueH;;
     }
   }
 }

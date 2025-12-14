@@ -126,6 +126,17 @@ namespace ExtInspectorTools.Editor
           EditorGUI.LabelField(valueRect, "Value", ExtStyles.MiddleCenteredStyleLabel);
           EditorGUI.DrawRect(separatorRect, ExtColors.DarkBorderColor);
         };
+        list.elementHeightCallback = (int index) =>
+        {
+          if (index < 0 || index >= pairs.arraySize)
+            return EditorGUIUtility.singleLineHeight;
+
+          SerializedProperty element = pairs.GetArrayElementAtIndex(index);
+          float height = EditorGUI.GetPropertyHeight(element, true);
+
+          // Небольшой отступ между строками (по вкусу)
+          return height + EditorGUIUtility.standardVerticalSpacing;
+        };
       }
     }
     
