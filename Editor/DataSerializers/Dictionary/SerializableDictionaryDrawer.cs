@@ -26,9 +26,9 @@ namespace ExtInspectorTools.Editor
     private SerializedProperty _keyRatio;
     private SerializedProperty pairs;
     
-    private static float foldoutBtn = EditorGUIUtility.singleLineHeight / 1.15f;
-    private static float sliderHeight = EditorGUIUtility.singleLineHeight;
-    private static Rects rects = new Rects();
+    private float foldoutBtn = EditorGUIUtility.singleLineHeight / 1.15f;
+    private float sliderHeight = EditorGUIUtility.singleLineHeight;
+    private Rects rects = new Rects();
     
     private readonly Vector2 offset = new Vector2(0, 2);
     private readonly float sliderPaddingTop = 2;
@@ -125,6 +125,17 @@ namespace ExtInspectorTools.Editor
           EditorGUI.LabelField(keyRect, "Key", ExtStyles.MiddleCenteredStyleLabel);
           EditorGUI.LabelField(valueRect, "Value", ExtStyles.MiddleCenteredStyleLabel);
           EditorGUI.DrawRect(separatorRect, ExtColors.DarkBorderColor);
+        };
+        list.elementHeightCallback = (int index) =>
+        {
+          if (index < 0 || index >= pairs.arraySize)
+            return EditorGUIUtility.singleLineHeight;
+
+          SerializedProperty element = pairs.GetArrayElementAtIndex(index);
+          float height = EditorGUI.GetPropertyHeight(element, true);
+
+          // Небольшой отступ между строками (по вкусу)
+          return height + EditorGUIUtility.standardVerticalSpacing;
         };
       }
     }
