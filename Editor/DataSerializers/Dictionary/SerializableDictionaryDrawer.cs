@@ -44,7 +44,6 @@ namespace ExtInspectorTools.Editor
       
       Rect subRect = new Rect(position.x + offset.x, position.y + offset.y, position.width - offset.x, position.height - offset.y);
       
-      property.serializedObject.Update();
       pairs ??= property.FindPropertyRelative("pairs");
       ValidateList(pairs);
       
@@ -92,7 +91,6 @@ namespace ExtInspectorTools.Editor
       pairs ??= property.FindPropertyRelative("pairs");
       ValidateList(pairs);
       list.DoList(listRect);
-      pairs.serializedObject.ApplyModifiedProperties();
     }
     
     private void ValidateList(SerializedProperty property)
