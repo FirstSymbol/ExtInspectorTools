@@ -17,17 +17,37 @@ namespace ExtInspectorTools
     
     [SerializeField] List<SerializableKeyValuePair<TKey,TValue>> pairs = new();
     [NonSerialized] Dictionary<TKey, TValue> dictionary = new Dictionary<TKey, TValue>();
-    [NonSerialized] private HashSet<int> duplicateIndices = new();
-    
+    [NonSerialized] private List<SerializableKeyValuePair<TKey,TValue>> incorrects = new();
+    private bool hasChanged = false;
     public void OnBeforeSerialize()
     {
+      if (!hasChanged) return;
+      
+      pairs.Clear();
+      foreach (var pair in dictionary)
+      {
+        pairs.Add(new SerializableKeyValuePair<TKey,TValue>(pair.Key, pair.Value));
+      }
+      /*
+      //Allows duplicate elements to replace deleted identical elements.
+      foreach (var incorrect in incorrects)
+      {
+        pairs.Add(incorrect);
+      }
+      */
+      ValidPairs();
+      hasChanged = false;
     }
 
     public void OnAfterDeserialize()
     {
-      dictionary.Clear();
-      duplicateIndices.Clear();
+      ValidPairs();
+    }
 
+    private void ValidPairs()
+    {
+      dictionary.Clear();
+      incorrects.Clear();
       for (int i = 0; i < pairs.Count; i++)
       {
         if (!dictionary.ContainsKey(pairs[i].key))
@@ -39,8 +59,8 @@ namespace ExtInspectorTools
         else
         {
           SetCorrectInPairs(i, false);
-
-          duplicateIndices.Add(i);
+          
+          incorrects.Add(pairs[i]);
         }
       }
     }
@@ -50,6 +70,11 @@ namespace ExtInspectorTools
       var t = pairs[i];
       t.SetCorrect(value);
       pairs[i] = t;
+    }
+
+    private void ValidateDictionary()
+    {
+      dictionary ??= new Dictionary<TKey, TValue>();
     }
 
     #region IDictionary Interface
@@ -80,7 +105,7 @@ namespace ExtInspectorTools
         return dictionary.Count;
       }
     }
-    
+
     public TValue this[TKey key]
     {
       get
@@ -94,9 +119,9 @@ namespace ExtInspectorTools
         dictionary[key] = value;
       }
     }
-    
+
     public bool IsReadOnly => false;
-    
+
     public IEnumerator<KeyValuePair<TKey, TValue>> GetEnumerator()
     {
       ValidateDictionary();
@@ -113,17 +138,14 @@ namespace ExtInspectorTools
     {
       ValidateDictionary();
       dictionary.Add(item.Key, item.Value);
-    }
-
-    private void ValidateDictionary()
-    {
-      dictionary ??= new Dictionary<TKey, TValue>();
+      hasChanged = true;
     }
 
     public void Clear()
     {
       ValidateDictionary();
       dictionary.Clear();
+      hasChanged = true;
     }
 
     public bool Contains(KeyValuePair<TKey, TValue> item)
@@ -141,7 +163,8 @@ namespace ExtInspectorTools
     public bool Remove(KeyValuePair<TKey, TValue> item)
     {
       ValidateDictionary();
-      return (dictionary as ICollection<KeyValuePair<TKey, TValue>>).Remove(item);
+      hasChanged = (dictionary as ICollection<KeyValuePair<TKey, TValue>>).Remove(item);
+      return hasChanged;
     }
 
     
@@ -149,6 +172,7 @@ namespace ExtInspectorTools
     {
       ValidateDictionary();
       dictionary.Add(key, value);
+      hasChanged = true;
     }
 
     public bool ContainsKey(TKey key)
@@ -160,7 +184,8 @@ namespace ExtInspectorTools
     public bool Remove(TKey key)
     {
       ValidateDictionary();
-      return dictionary.Remove(key);
+      hasChanged = dictionary.Remove(key);
+      return hasChanged;
     }
 
     public bool TryGetValue(TKey key, out TValue value)
