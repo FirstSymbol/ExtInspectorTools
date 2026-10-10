@@ -1,0 +1,226 @@
+.ext-dict {
+    --ext-dict-bg: rgba(0, 0, 0, 0.16);
+    --ext-dict-border: rgba(255, 255, 255, 0.07);
+    --ext-dict-muted: rgba(255, 255, 255, 0.5);
+    --ext-dict-accent: #4C8DD9;
+    --ext-dict-error: #DC4B4B;
+    margin: 2px 0 4px 0;
+}
+
+.ext-dict--light {
+    --ext-dict-bg: rgba(0, 0, 0, 0.05);
+    --ext-dict-border: rgba(0, 0, 0, 0.1);
+    --ext-dict-muted: rgba(0, 0, 0, 0.5);
+}
+
+.ext-dict__foldout {
+    background-color: var(--ext-dict-bg);
+    border-width: 1px;
+    border-color: var(--ext-dict-border);
+    border-radius: 5px;
+}
+
+.ext-dict__foldout > #unity-content {
+    margin: 0;
+    padding: 0 4px 4px 4px;
+}
+
+/* Header */
+.ext-dict__header {
+    margin: 0;
+    padding: 2px 4px;
+    min-height: 22px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+}
+
+.ext-dict__header > VisualElement {
+    flex-grow: 1;
+}
+
+.ext-dict__header Label {
+    -unity-font-style: bold;
+}
+
+.ext-dict__badge {
+    -unity-font-style: normal;
+    font-size: 10px;
+    padding: 1px 7px;
+    margin: 0 0 0 4px;
+    border-radius: 8px;
+    -unity-text-align: middle-center;
+    flex-grow: 0;
+    flex-shrink: 0;
+}
+
+.ext-dict__count {
+    background-color: rgba(128, 128, 128, 0.3);
+}
+
+.ext-dict__duplicates {
+    background-color: var(--ext-dict-error);
+    color: #FFFFFF;
+}
+
+.ext-dict__add-small {
+    width: 20px;
+    height: 18px;
+    margin: 0 0 0 4px;
+    padding: 0;
+    border-radius: 4px;
+    -unity-font-style: bold;
+    flex-shrink: 0;
+}
+
+/* Column header */
+.ext-dict__columns {
+    flex-direction: row;
+    align-items: center;
+    height: 18px;
+    padding-left: 18px;
+    margin-top: 2px;
+    border-bottom-width: 1px;
+    border-color: var(--ext-dict-border);
+}
+
+.ext-dict__column {
+    color: var(--ext-dict-muted);
+    font-size: 10px;
+    -unity-font-style: bold;
+    padding-left: 3px;
+    overflow: hidden;
+}
+
+.ext-dict__key {
+    flex-shrink: 0;
+}
+
+.ext-dict__value {
+    flex-grow: 1;
+}
+
+.ext-dict__splitter {
+    width: 8px;
+    height: 100%;
+    flex-shrink: 0;
+    cursor: resize-horizontal;
+    align-items: center;
+}
+
+.ext-dict__splitter > VisualElement {
+    width: 1px;
+    height: 100%;
+    background-color: var(--ext-dict-border);
+}
+
+.ext-dict__splitter:hover > VisualElement {
+    width: 2px;
+    background-color: var(--ext-dict-accent);
+}
+
+.ext-dict__remove-spacer {
+    width: 26px;
+    flex-shrink: 0;
+}
+
+/* Rows */
+.ext-dict__list {
+    margin-top: 1px;
+}
+
+.ext-dict__row {
+    flex-direction: row;
+    align-items: flex-start;
+    padding: 2px 0;
+    border-left-width: 3px;
+    border-color: rgba(0, 0, 0, 0);
+}
+
+.ext-dict__row--duplicate {
+    border-color: var(--ext-dict-error);
+    background-color: rgba(220, 75, 75, 0.12);
+}
+
+.ext-dict__row-key {
+    flex-shrink: 0;
+    flex-direction: row;
+    align-items: center;
+}
+
+.ext-dict__row-key > .ext-dict__field {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.ext-dict__row-gap {
+    width: 8px;
+    flex-shrink: 0;
+}
+
+.ext-dict__row-value {
+    flex-grow: 1;
+    flex-shrink: 1;
+}
+
+.ext-dict__row-value--struct {
+    padding-left: 4px;
+    border-left-width: 1px;
+    border-color: var(--ext-dict-border);
+}
+
+.ext-dict__field {
+    margin: 0;
+}
+
+.ext-dict__field Label {
+    min-width: 0;
+}
+
+.ext-dict__struct-field Label {
+    color: var(--ext-dict-muted);
+    font-size: 11px;
+    width: 35%;
+    min-width: 40px;
+}
+
+.ext-dict__duplicate-tag {
+    font-size: 9px;
+    -unity-font-style: bold;
+    color: #FFFFFF;
+    background-color: var(--ext-dict-error);
+    border-radius: 6px;
+    padding: 0 5px;
+    margin-left: 3px;
+    flex-shrink: 0;
+}
+
+.ext-dict__remove {
+    width: 20px;
+    height: 18px;
+    margin: 0 0 0 6px;
+    padding: 0;
+    border-radius: 4px;
+    font-size: 10px;
+    color: var(--ext-dict-muted);
+    background-color: rgba(0, 0, 0, 0);
+    border-width: 0;
+    flex-shrink: 0;
+}
+
+.ext-dict__remove:hover {
+    color: #FFFFFF;
+    background-color: var(--ext-dict-error);
+}
+
+.ext-dict__empty {
+    color: var(--ext-dict-muted);
+    -unity-font-style: italic;
+    -unity-text-align: middle-center;
+    padding: 8px 0 4px 0;
+}
+
+.ext-dict__add {
+    margin: 4px 0 0 0;
+    height: 20px;
+    border-radius: 4px;
+}

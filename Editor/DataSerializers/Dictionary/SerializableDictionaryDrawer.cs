@@ -35,6 +35,10 @@ namespace ExtInspectorTools.Editor
 
     #endregion
 
+    /// <summary>UI Toolkit inspectors use the new view; IMGUI inspectors (e.g. Odin) keep the OnGUI version below.</summary>
+    public override UnityEngine.UIElements.VisualElement CreatePropertyGUI(SerializedProperty property) =>
+      new SerializableDictionaryView(property);
+
     public override void OnGUI(Rect position, SerializedProperty property, GUIContent label)
     {
       EditorGUI.BeginProperty(position, label, property);
