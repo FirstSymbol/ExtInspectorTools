@@ -5,6 +5,7 @@
   "documentationUrl": "https://github.com/FirstSymbol/ExtInspectorTools.git",
   "description": "Advanced inspector attributes & serializes for Unity",
   "homepage": "https://github.com/FirstSymbol/ExtInspectorTools#readme",
+  "license": "MIT",
   "author": {
     "name": "FirstSymbol",
     "url": "https://linkedin.com/in/firstsymbol"
